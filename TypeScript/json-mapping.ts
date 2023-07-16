@@ -1,21 +1,16 @@
-export class Mapping
-{
+export class Mapping {
     /**
      * Checks if the given json object is type of a given instance (class/interface) type.
      * @param jsonObject Object to check.
      * @param instanceType The type to check for the object.
      * @returns true if object is of the given instance type; false otherwise.
      */
-    public static isTypeOf<T>(jsonObject: Object, instanceType: { new(): T; }): boolean
-    {
-        // Check that all the properties of the JSON Object are also available in the Class.
+    static isTypeOf<T>(jsonObject: Object, instanceType: { new(): T; }): boolean {
+        // Check that all the properties of the JSON Object are also available in the provided instance type.
         const instanceObject = new instanceType();
-        for (let propertyName in instanceObject)
-        {
-            if (!jsonObject.hasOwnProperty(propertyName))
-            {
-                // If any property in instance object is missing then we have a mismatch.
-                return false;
+        for (let propertyName in instanceObject) {
+            if (!jsonObject.hasOwnProperty(propertyName)) {
+                return false; // If any property in instance object is missing then we have a mismatch.
             }
         }
         // All the properties are matching between object and the instance type.
@@ -28,18 +23,13 @@ export class Mapping
      * @param instanceType The type to check for the object.
      * @returns true if object is of the given instance type; false otherwise.
      */
-    public static isCollectionTypeOf<T>(jsonObjectCollection: any[], instanceType: { new(): T; }): boolean
-    {
-        // Check that all the properties of the JSON Object are also available in the Class.
+    static isCollectionTypeOf<T>(jsonObjectCollection: any[], instanceType: { new(): T; }): boolean {
+        // Check that all the properties of the JSON Object are also available in the provided instance type.
         const instanceObject = new instanceType();
-        for (let jsonObject of jsonObjectCollection)
-        {
-            for (let propertyName in instanceObject)
-            {
-                if (!jsonObject.hasOwnProperty(propertyName))
-                {
-                    // If any property in instance object is missing then we have a mismatch.
-                    return false;
+        for (let jsonObject of jsonObjectCollection) {
+            for (let propertyName in instanceObject) {
+                if (!jsonObject.hasOwnProperty(propertyName)) {
+                    return false; // If any property in instance object is missing then we have a mismatch.
                 }
             }
         }
